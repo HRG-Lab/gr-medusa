@@ -1,0 +1,26 @@
+id: medusa_array_plot_3d
+label: Array Plot 3D
+category: '[Medusa]'
+
+templates:
+  imports: from gnuradio import medusa
+  make: |-
+    <%
+        win = 'self._%s_win'%id
+    %>\
+    medusa.array_plot_3d()
+    ${win} = self.${id}
+    ${gui_hint() % win}
+
+parameters:
+-   id: gui_hint
+    label: GUI Hint
+    dtype: gui_hint
+    hide: part
+
+inputs:
+- domain: message
+  id: positions
+  optional: true
+
+file_format: 1

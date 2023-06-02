@@ -1,0 +1,516 @@
+options:
+  parameters:
+    author: gaylybailey
+    catch_exceptions: 'True'
+    category: '[GRC Hier Blocks]'
+    cmake_opt: ''
+    comment: ''
+    copyright: ''
+    description: ''
+    gen_cmake: 'On'
+    gen_linking: dynamic
+    generate_options: qt_gui
+    hier_block_src_path: '.:'
+    id: mmse
+    max_nouts: '0'
+    output_language: python
+    placement: (0,0)
+    qt_qss_theme: ''
+    realtime_scheduling: ''
+    run: 'True'
+    run_command: '{python} -u {filename}'
+    run_options: prompt
+    sizing_mode: fixed
+    thread_safe_setters: ''
+    title: Not titled yet
+    window_size: (1000,1000)
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [40, 36.0]
+    rotation: 0
+    state: enabled
+
+blocks:
+- name: N
+  id: variable
+  parameters:
+    comment: ''
+    value: '8'
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [320, 36.0]
+    rotation: 0
+    state: enabled
+- name: freq
+  id: variable
+  parameters:
+    comment: ''
+    value: '1000'
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [400, 36.0]
+    rotation: 0
+    state: enabled
+- name: intf_amplitude
+  id: variable
+  parameters:
+    comment: ''
+    value: '0.2'
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [488, 180.0]
+    rotation: 0
+    state: enabled
+- name: intf_angle
+  id: variable
+  parameters:
+    comment: ''
+    value: (-40, 0)
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [216, 180.0]
+    rotation: 0
+    state: enabled
+- name: noise_power
+  id: variable
+  parameters:
+    comment: ''
+    value: '0.1'
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [488, 36.0]
+    rotation: 0
+    state: enabled
+- name: phis
+  id: variable
+  parameters:
+    comment: ''
+    value: np.linspace(0, np.pi, 181)
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [40, 212.0]
+    rotation: 0
+    state: enabled
+- name: samp_rate
+  id: variable
+  parameters:
+    comment: ''
+    value: '100000'
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [216, 36.0]
+    rotation: 0
+    state: enabled
+- name: sig_amplitude
+  id: variable
+  parameters:
+    comment: ''
+    value: '1'
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [488, 108.0]
+    rotation: 0
+    state: enabled
+- name: soi_angle
+  id: variable
+  parameters:
+    comment: ''
+    value: (40, 0)
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [216, 108.0]
+    rotation: 0
+    state: enabled
+- name: thetas
+  id: variable
+  parameters:
+    comment: ''
+    value: np.linspace(-np.pi, np.pi, 361)
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [40, 140.0]
+    rotation: 0
+    state: enabled
+- name: analog_sig_source_x_0
+  id: analog_sig_source_x
+  parameters:
+    affinity: ''
+    alias: ''
+    amp: sig_amplitude
+    comment: ''
+    freq: freq
+    maxoutbuf: '0'
+    minoutbuf: '0'
+    offset: '0'
+    phase: '0'
+    samp_rate: samp_rate
+    type: complex
+    waveform: analog.GR_COS_WAVE
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [640, 228.0]
+    rotation: 0
+    state: true
+- name: analog_sig_source_x_0_0
+  id: analog_sig_source_x
+  parameters:
+    affinity: ''
+    alias: ''
+    amp: intf_amplitude
+    comment: ''
+    freq: freq
+    maxoutbuf: '0'
+    minoutbuf: '0'
+    offset: '0'
+    phase: '0'
+    samp_rate: samp_rate
+    type: complex
+    waveform: analog.GR_COS_WAVE
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [632, 500.0]
+    rotation: 0
+    state: true
+- name: blocks_add_xx_0
+  id: blocks_add_xx
+  parameters:
+    affinity: ''
+    alias: ''
+    comment: ''
+    maxoutbuf: '0'
+    minoutbuf: '0'
+    num_inputs: '2'
+    type: complex
+    vlen: N
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [1216, 408.0]
+    rotation: 0
+    state: true
+- name: blocks_message_strobe_0
+  id: blocks_message_strobe
+  parameters:
+    affinity: ''
+    alias: ''
+    comment: ''
+    maxoutbuf: '0'
+    minoutbuf: '0'
+    msg: pmt.to_pmt("")
+    period: '1000'
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [88, 380.0]
+    rotation: 0
+    state: true
+- name: blocks_null_sink_0
+  id: blocks_null_sink
+  parameters:
+    affinity: ''
+    alias: ''
+    bus_structure_sink: '[[0,],]'
+    comment: ''
+    num_inputs: '6'
+    type: complex
+    vlen: '1'
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [1592, 376.0]
+    rotation: 0
+    state: true
+- name: blocks_vector_to_streams_0
+  id: blocks_vector_to_streams
+  parameters:
+    affinity: ''
+    alias: ''
+    comment: ''
+    maxoutbuf: '0'
+    minoutbuf: '0'
+    num_streams: N
+    type: complex
+    vlen: '1'
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [1392, 312.0]
+    rotation: 0
+    state: true
+- name: epy_block_0
+  id: epy_block
+  parameters:
+    _source_code: "\"\"\"\nEmbedded Python Blocks:\n\nEach time this file is saved,\
+      \ GRC will instantiate the first class it finds\nto get ports and parameters\
+      \ of your block. The arguments to __init__  will\nbe the parameters. All of\
+      \ them are required to have default values!\n\"\"\"\n\nimport numpy as np\n\
+      from scipy.constants import speed_of_light\nfrom gnuradio import gr\nfrom gnuradio.gr\
+      \ import pmt\n\n\ndef sample_spherical(npoints, ndim=3):\n    vec = np.random.randn(ndim,\
+      \ npoints)\n    vec /= np.linalg.norm(vec, axis=0)\n    return vec\n\n\nclass\
+      \ blk(gr.sync_block):  # other base classes are basic_block, decim_block, interp_block\n\
+      \    \"\"\"Embedded Python Block example - a simple multiply const\"\"\"\n\n\
+      \    def __init__(self, n_elems=8, freq=1.0):  # only default arguments here\n\
+      \        \"\"\"arguments to this function show up as parameters in GRC\"\"\"\
+      \n        gr.sync_block.__init__(\n            self,\n            name='Random\
+      \ Positions',\n            in_sig=None,\n            out_sig=None\n        )\n\
+      \        self.n_elems = n_elems\n        self.freq = freq\n        self.wavelen\
+      \ = speed_of_light / self.freq\n        self.elems = self.wavelen * sample_spherical(self.n_elems).T\n\
+      \        self.rng = np.random.default_rng()\n        \n        self.message_port_register_in(pmt.intern(\"\
+      trigger\"))\n        self.set_msg_handler(pmt.intern(\"trigger\"), self.handler)\n\
+      \        \n        self.message_port_register_out(pmt.intern(\"positions\"))\n\
+      \n\n    def handler(self, msg):\n        perturbations = self.rng.standard_normal(size=self.elems.shape)\n\
+      \        self.elems += perturbations\n        \n        self.message_port_pub(\n\
+      \            pmt.intern(\"positions\"), \n            pmt.to_pmt(self.elems)\n\
+      \        )\n"
+    affinity: ''
+    alias: ''
+    comment: ''
+    freq: freq
+    maxoutbuf: '0'
+    minoutbuf: '0'
+    n_elems: N
+  states:
+    _io_cache: ('Random Positions', 'blk', [('n_elems', '8'), ('freq', '1.0')], [('trigger',
+      'message', 1)], [('positions', 'message', 1)], 'Embedded Python Block example
+      - a simple multiply const', ['freq', 'n_elems'])
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [320, 380.0]
+    rotation: 0
+    state: true
+- name: import_0
+  id: import
+  parameters:
+    alias: ''
+    comment: ''
+    imports: import numpy as np
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [600, 36.0]
+    rotation: 0
+    state: true
+- name: medusa_array_plot_3d_0
+  id: medusa_array_plot_3d
+  parameters:
+    affinity: ''
+    alias: ''
+    comment: ''
+    gui_hint: 0,0,1,1
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [608, 360.0]
+    rotation: 0
+    state: enabled
+- name: medusa_calc_steering_vec_0
+  id: medusa_calc_steering_vec
+  parameters:
+    affinity: ''
+    alias: ''
+    comment: ''
+    frequency: freq
+    maxoutbuf: '0'
+    minoutbuf: '0'
+    phis: phis
+    thetas: thetas
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [608, 404.0]
+    rotation: 0
+    state: true
+- name: qtgui_time_sink_x_0
+  id: qtgui_time_sink_x
+  parameters:
+    affinity: ''
+    alias: ''
+    alpha1: '1.0'
+    alpha10: '1.0'
+    alpha2: '1.0'
+    alpha3: '1.0'
+    alpha4: '1.0'
+    alpha5: '1.0'
+    alpha6: '1.0'
+    alpha7: '1.0'
+    alpha8: '1.0'
+    alpha9: '1.0'
+    autoscale: 'False'
+    axislabels: 'True'
+    color1: blue
+    color10: dark blue
+    color2: red
+    color3: green
+    color4: black
+    color5: cyan
+    color6: magenta
+    color7: yellow
+    color8: dark red
+    color9: dark green
+    comment: ''
+    ctrlpanel: 'False'
+    entags: 'True'
+    grid: 'False'
+    gui_hint: ''
+    label1: Signal 1
+    label10: Signal 10
+    label2: Signal 2
+    label3: Signal 3
+    label4: Signal 4
+    label5: Signal 5
+    label6: Signal 6
+    label7: Signal 7
+    label8: Signal 8
+    label9: Signal 9
+    legend: 'True'
+    marker1: '-1'
+    marker10: '-1'
+    marker2: '-1'
+    marker3: '-1'
+    marker4: '-1'
+    marker5: '-1'
+    marker6: '-1'
+    marker7: '-1'
+    marker8: '-1'
+    marker9: '-1'
+    name: '""'
+    nconnections: '2'
+    size: '1024'
+    srate: samp_rate
+    stemplot: 'False'
+    style1: '1'
+    style10: '1'
+    style2: '1'
+    style3: '1'
+    style4: '1'
+    style5: '1'
+    style6: '1'
+    style7: '1'
+    style8: '1'
+    style9: '1'
+    tr_chan: '0'
+    tr_delay: '0'
+    tr_level: '0.0'
+    tr_mode: qtgui.TRIG_MODE_FREE
+    tr_slope: qtgui.TRIG_SLOPE_POS
+    tr_tag: '""'
+    type: complex
+    update_time: '0.10'
+    width1: '1'
+    width10: '1'
+    width2: '1'
+    width3: '1'
+    width4: '1'
+    width5: '1'
+    width6: '1'
+    width7: '1'
+    width8: '1'
+    width9: '1'
+    ylabel: Amplitude
+    ymax: '1'
+    ymin: '-1'
+    yunit: '""'
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [1696, 308.0]
+    rotation: 0
+    state: true
+- name: sig_0
+  id: sig
+  parameters:
+    affinity: ''
+    alias: ''
+    comment: ''
+    freq: freq
+    maxoutbuf: '0'
+    minoutbuf: '0'
+    n_elems: N
+    noise_power: noise_power
+    samp_rate: samp_rate
+    soi_angle: intf_angle
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [968, 452.0]
+    rotation: 0
+    state: true
+- name: sig_0_0
+  id: sig
+  parameters:
+    affinity: ''
+    alias: ''
+    comment: ''
+    freq: freq
+    maxoutbuf: '0'
+    minoutbuf: '0'
+    n_elems: N
+    noise_power: noise_power
+    samp_rate: samp_rate
+    soi_angle: soi_angle
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [968, 332.0]
+    rotation: 0
+    state: true
+
+connections:
+- [analog_sig_source_x_0, '0', sig_0_0, '0']
+- [analog_sig_source_x_0_0, '0', sig_0, '0']
+- [blocks_add_xx_0, '0', blocks_vector_to_streams_0, '0']
+- [blocks_message_strobe_0, strobe, epy_block_0, trigger]
+- [blocks_vector_to_streams_0, '0', qtgui_time_sink_x_0, '0']
+- [blocks_vector_to_streams_0, '1', qtgui_time_sink_x_0, '1']
+- [blocks_vector_to_streams_0, '2', blocks_null_sink_0, '0']
+- [blocks_vector_to_streams_0, '3', blocks_null_sink_0, '1']
+- [blocks_vector_to_streams_0, '4', blocks_null_sink_0, '2']
+- [blocks_vector_to_streams_0, '5', blocks_null_sink_0, '3']
+- [blocks_vector_to_streams_0, '6', blocks_null_sink_0, '4']
+- [blocks_vector_to_streams_0, '7', blocks_null_sink_0, '5']
+- [epy_block_0, positions, medusa_array_plot_3d_0, positions]
+- [epy_block_0, positions, medusa_calc_steering_vec_0, positions]
+- [medusa_calc_steering_vec_0, vecs, sig_0, steering_vectors]
+- [medusa_calc_steering_vec_0, vecs, sig_0_0, steering_vectors]
+- [sig_0, '0', blocks_add_xx_0, '1']
+- [sig_0_0, '0', blocks_add_xx_0, '0']
+
+metadata:
+  file_format: 1
