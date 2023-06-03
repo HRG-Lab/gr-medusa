@@ -61,7 +61,7 @@ class plot_array_3d_aruco(gr.sync_block, GLViewWidget):
         origin = origin['tvec']
         print(origin)
 
-        # pts = np.array([f['tvec'].T for f in data.values()]).reshape(-1, 3)
-        # pts = pts - origin
+        pts = np.array([f['tvec'].T for f in data.values()]).reshape(-1, 3)
+        pts = pts - origin
 
-        # self.sigUpdateData.emit(pts)
+        self.sigUpdateData.emit(pts)
