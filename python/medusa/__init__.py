@@ -24,4 +24,6 @@ from .array_plot_3d import array_plot_3d
 from .calc_steering_vec import calc_steering_vec
 from .array_propagation_sim import array_propagation_sim
 from .plot_array_3d_aruco import plot_array_3d_aruco
+from .manual_beamsteering import manual_beamsteering
+from .weights_to_a_matrix import weights_to_a_matrix
 #

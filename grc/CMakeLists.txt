@@ -10,5 +10,7 @@ install(FILES
     medusa_array_plot_3d.block.yml
     medusa_calc_steering_vec.block.yml
     medusa_array_propagation_sim.block.yml
-    medusa_plot_array_3d_aruco.block.yml DESTINATION share/gnuradio/grc/blocks
+    medusa_plot_array_3d_aruco.block.yml
+    medusa_manual_beamsteering.block.yml
+    medusa_weights_to_a_matrix.block.yml DESTINATION share/gnuradio/grc/blocks
 )

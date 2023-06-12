@@ -25,7 +25,9 @@ GR_PYTHON_INSTALL(
     array_plot_3d.py
     calc_steering_vec.py
     array_propagation_sim.py
-    plot_array_3d_aruco.py DESTINATION ${GR_PYTHON_DIR}/gnuradio/medusa
+    plot_array_3d_aruco.py
+    manual_beamsteering.py
+    weights_to_a_matrix.py DESTINATION ${GR_PYTHON_DIR}/gnuradio/medusa
 )
 
 ########################################################################

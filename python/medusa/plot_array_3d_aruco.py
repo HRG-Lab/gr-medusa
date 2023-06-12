@@ -10,7 +10,6 @@
 import numpy as np
 from gnuradio import gr
 from gnuradio.gr import pmt
-from pprint import pprint
 
 import pyqtgraph.opengl as gl
 from pyqtgraph.opengl import GLViewWidget
@@ -35,14 +34,13 @@ class plot_array_3d_aruco(gr.sync_block, GLViewWidget):
         GLViewWidget.__init__(self, *args)
 
         self.origin_id = origin
+        self.axes = []
         self.elems = np.zeros((1, 3))
         self.elem_plot = gl.GLScatterPlotItem(
             pos=self.elems, color=(1.0, 0.0, 1.0, 1.0)
         )
-        self.axes_plot = gl.GLAxisItem()
 
         self.addItem(self.elem_plot)
-        self.addItem(self.axes_plot)
 
         self.message_port_register_in(pmt.intern("positions"))
         self.set_msg_handler(pmt.intern("positions"), self.handler)
@@ -52,6 +50,14 @@ class plot_array_3d_aruco(gr.sync_block, GLViewWidget):
     def updatePlot(self, elems):
         self.elems = elems
         self.elem_plot.setData(pos=self.elems)
+        for axis in self.axes:
+            self.removeItem(axis)
+        self.axes = []
+        for elem in elems:
+            axis = gl.GLAxisItem()
+            axis.translate(*elem)
+            self.axes.append(axis)
+            self.addItem(axis)
 
     def handler(self, msg):
         data = pmt.to_python(msg)
@@ -59,9 +65,7 @@ class plot_array_3d_aruco(gr.sync_block, GLViewWidget):
         if origin is None:
             return
         origin = origin['tvec']
-        print(origin)
 
         pts = np.array([f['tvec'].T for f in data.values()]).reshape(-1, 3)
-        pts = pts - origin
 
         self.sigUpdateData.emit(pts)
