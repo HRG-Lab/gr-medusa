@@ -1,0 +1,40 @@
+id: medusa_estimate_poses
+label: Estimate Poses
+category: '[Medusa]/OpenCV'
+
+templates:
+  imports: from gnuradio import medusa
+  make: medusa.estimate_poses(${calibration_file}, ${marker_side_length}, ${resolution.width}, ${resolution.height})
+
+parameters:
+- id: calibration_file
+  label: Calibration File
+  dtype: file_open
+
+- id: marker_side_length
+  label: Marker Side Length [m]
+  dtype: float
+
+- id: resolution
+  label: Resolution
+  dtype: enum
+  options: ["640x480", "1280x720", "1280x1024"]
+  option_attributes:
+    width: [640, 1280, 1280]
+    height: [480, 720, 1024]
+
+inputs:
+- label: frame
+  domain: stream
+  dtype: byte
+  vlen: ${ resolution.width * resolution.height * 3}
+  optional: false
+
+outputs:
+- label: annotated_frame
+  domain: stream
+  dtype: byte
+  vlen: ${ resolution.width * resolution.height * 3}
+  optional: true
+
+file_format: 1

@@ -5,12 +5,9 @@
 #
 # SPDX-License-Identifier: GPL-3.0-or-later
 #
-
 install(FILES
-    medusa_array_plot_3d.block.yml
-    medusa_calc_steering_vec.block.yml
-    medusa_array_propagation_sim.block.yml
-    medusa_plot_array_3d_aruco.block.yml
-    medusa_manual_beamsteering.block.yml
-    medusa_weights_to_a_matrix.block.yml DESTINATION share/gnuradio/grc/blocks
+    medusa_qlabel_video_sink.block.yml
+    medusa_opencv_source.block.yml
+    medusa_aruco_detector.block.yml
+    medusa_estimate_poses.block.yml DESTINATION share/gnuradio/grc/blocks
 )

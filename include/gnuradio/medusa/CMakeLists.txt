@@ -11,5 +11,7 @@
 ########################################################################
 install(FILES
     api.h
-    DESTINATION include/gnuradio/medusa
+    opencv_source.h
+    aruco_detector.h
+    estimate_poses.h DESTINATION include/gnuradio/medusa
 )

@@ -1,0 +1,152 @@
+options:
+  parameters:
+    author: gaylybailey
+    catch_exceptions: 'True'
+    category: '[GRC Hier Blocks]'
+    cmake_opt: ''
+    comment: ''
+    copyright: ''
+    description: ''
+    gen_cmake: 'On'
+    gen_linking: dynamic
+    generate_options: qt_gui
+    hier_block_src_path: '.:'
+    id: test
+    max_nouts: '0'
+    output_language: python
+    placement: (0,0)
+    qt_qss_theme: ''
+    realtime_scheduling: ''
+    run: 'True'
+    run_command: '{python} -u {filename}'
+    run_options: prompt
+    sizing_mode: fixed
+    thread_safe_setters: ''
+    title: Not titled yet
+    window_size: (1000,1000)
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [24, 28.0]
+    rotation: 0
+    state: enabled
+
+blocks:
+- name: samp_rate
+  id: variable
+  parameters:
+    comment: ''
+    value: '245760000'
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [200, 28.0]
+    rotation: 0
+    state: enabled
+- name: import_0
+  id: import
+  parameters:
+    alias: ''
+    comment: ''
+    imports: import numpy as np
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [200, 100.0]
+    rotation: 0
+    state: true
+- name: medusa_aruco_detector_0
+  id: medusa_aruco_detector
+  parameters:
+    affinity: ''
+    alias: ''
+    comment: ''
+    dictionary: '0'
+    maxoutbuf: '0'
+    minoutbuf: '0'
+    resolution: 640x480
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [368, 348.0]
+    rotation: 0
+    state: true
+- name: medusa_estimate_poses_0
+  id: medusa_estimate_poses
+  parameters:
+    affinity: ''
+    alias: ''
+    calibration_file: /home/gaylybailey/Documents/Programming/OpenCVSandbox/logitech_brio.yaml
+    comment: ''
+    marker_side_length: '0.1'
+    maxoutbuf: '0'
+    minoutbuf: '0'
+    resolution: 640x480
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [736, 340.0]
+    rotation: 0
+    state: enabled
+- name: medusa_opencv_source_0
+  id: medusa_opencv_source
+  parameters:
+    affinity: ''
+    alias: ''
+    comment: ''
+    maxoutbuf: '0'
+    minoutbuf: '0'
+    resolution: 640x480
+    video_source: '0'
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [136, 348.0]
+    rotation: 0
+    state: true
+- name: medusa_qlabel_video_sink_0
+  id: medusa_qlabel_video_sink
+  parameters:
+    affinity: ''
+    alias: ''
+    comment: ''
+    gui_hint: 0, 1, 1, 1
+    resolution: 640x480
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [1088, 356.0]
+    rotation: 0
+    state: enabled
+- name: medusa_qlabel_video_sink_0_0
+  id: medusa_qlabel_video_sink
+  parameters:
+    affinity: ''
+    alias: ''
+    comment: ''
+    gui_hint: 0, 0, 1, 1
+    resolution: 640x480
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [744, 284.0]
+    rotation: 0
+    state: true
+
+connections:
+- [medusa_aruco_detector_0, '0', medusa_estimate_poses_0, '0']
+- [medusa_aruco_detector_0, '0', medusa_qlabel_video_sink_0_0, '0']
+- [medusa_estimate_poses_0, '0', medusa_qlabel_video_sink_0, '0']
+- [medusa_opencv_source_0, '0', medusa_aruco_detector_0, '0']
+
+metadata:
+  file_format: 1
+  grc_version: 3.10.7.0

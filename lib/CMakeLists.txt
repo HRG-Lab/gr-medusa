@@ -12,6 +12,9 @@
 include(GrPlatform) #define LIB_SUFFIX
 
 list(APPEND medusa_sources
+    opencv_source_impl.cc
+    aruco_detector_impl.cc
+    estimate_poses_impl.cc
 )
 
 set(medusa_sources "${medusa_sources}" PARENT_SCOPE)
@@ -21,7 +24,9 @@ if(NOT medusa_sources)
 endif(NOT medusa_sources)
 
 add_library(gnuradio-medusa SHARED ${medusa_sources})
+include_directories( ${OpenCV_INCLUDE_DIRS} )
 target_link_libraries(gnuradio-medusa gnuradio::gnuradio-runtime)
+target_link_libraries( gnuradio-medusa ${OpenCV_LIBS} )
 target_include_directories(gnuradio-medusa
     PUBLIC $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/../include>
     PUBLIC $<INSTALL_INTERFACE:include>

@@ -1,0 +1,30 @@
+id: medusa_opencv_source
+label: OpenCV Source
+category: '[Medusa]/OpenCV'
+
+templates:
+  imports: from gnuradio import medusa
+  make: medusa.opencv_source(${video_source}, ${resolution.width}, ${resolution.height})
+
+parameters:
+- id: video_source
+  label: Video Source
+  dtype: int
+  default: 0
+
+- id: resolution
+  label: Resolution
+  dtype: enum
+  options: ["640x480", "1280x720", "1280x1024"]
+  option_attributes:
+    width: [640, 1280, 1280]
+    height: [480, 720, 1024]
+
+outputs:
+- label: frame
+  domain: stream
+  dtype: byte
+  vlen: ${ resolution.width * resolution.height * 3 }
+  optional: false
+
+file_format: 1

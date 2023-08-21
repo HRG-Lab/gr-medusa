@@ -21,6 +21,9 @@ namespace py = pybind11;
 // Please do not delete
 /**************************************/
 // BINDING_FUNCTION_PROTOTYPES(
+    void bind_opencv_source(py::module& m);
+    void bind_aruco_detector(py::module& m);
+    void bind_estimate_poses(py::module& m);
 // ) END BINDING_FUNCTION_PROTOTYPES
 
 
@@ -49,5 +52,8 @@ PYBIND11_MODULE(medusa_python, m)
     // Please do not delete
     /**************************************/
     // BINDING_FUNCTION_CALLS(
+    bind_opencv_source(m);
+    bind_aruco_detector(m);
+    bind_estimate_poses(m);
     // ) END BINDING_FUNCTION_CALLS
 }

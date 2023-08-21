@@ -6,6 +6,11 @@
 # SPDX-License-Identifier: GPL-3.0-or-later
 #
 
+# Select the release build type by default to get optimization flags.
+# This has to come before project() which otherwise initializes it.
+# Build type can still be overridden by setting -DCMAKE_BUILD_TYPE=
+set(CMAKE_BUILD_TYPE "Release" CACHE STRING "")
+
 ########################################################################
 # Project setup
 ########################################################################
@@ -15,27 +20,22 @@ enable_testing()
 
 # Install to PyBOMBS target prefix if defined
 if(DEFINED ENV{PYBOMBS_PREFIX})
-    set(CMAKE_INSTALL_PREFIX $ENV{PYBOMBS_PREFIX})
-    message(STATUS "PyBOMBS installed GNU Radio. Setting CMAKE_INSTALL_PREFIX to $ENV{PYBOMBS_PREFIX}")
+    set(CMAKE_INSTALL_PREFIX $ENV{PYBOMBS_PREFIX} CACHE PATH "")
+    message(STATUS "PyBOMBS installed GNU Radio. Defaulting CMAKE_INSTALL_PREFIX to $ENV{PYBOMBS_PREFIX}")
 endif()
 
-# Select the release build type by default to get optimization flags
-if(NOT CMAKE_BUILD_TYPE)
-   set(CMAKE_BUILD_TYPE "Release")
-   message(STATUS "Build type not specified: defaulting to release.")
-endif(NOT CMAKE_BUILD_TYPE)
-set(CMAKE_BUILD_TYPE ${CMAKE_BUILD_TYPE} CACHE STRING "")
-
 # Make sure our local CMake Modules path comes first
-list(INSERT CMAKE_MODULE_PATH 0 ${CMAKE_SOURCE_DIR}/cmake/Modules)
+list(INSERT CMAKE_MODULE_PATH 0 ${PROJECT_SOURCE_DIR}/cmake/Modules)
 # Find gnuradio to get access to the cmake modules
 find_package(Gnuradio "3.10" REQUIRED)
 
 # Set the version information here
+# cmake-format: off
 set(VERSION_MAJOR 1)
 set(VERSION_API   0)
 set(VERSION_ABI   0)
 set(VERSION_PATCH 0)
+# cmake-format: on
 
 cmake_policy(SET CMP0011 NEW)
 
@@ -96,6 +96,7 @@ endif(APPLE)
 # Find gnuradio build dependencies
 ########################################################################
 find_package(Doxygen)
+find_package( OpenCV REQUIRED )
 
 ########################################################################
 # Setup doxygen option
@@ -110,7 +111,7 @@ endif(DOXYGEN_FOUND)
 # Create uninstall target
 ########################################################################
 configure_file(
-    ${CMAKE_SOURCE_DIR}/cmake/cmake_uninstall.cmake.in
+    ${PROJECT_SOURCE_DIR}/cmake/cmake_uninstall.cmake.in
     ${CMAKE_CURRENT_BINARY_DIR}/cmake_uninstall.cmake
 @ONLY)
 
@@ -148,4 +149,3 @@ configure_package_config_file(
     ${CMAKE_CURRENT_BINARY_DIR}/cmake/Modules/${target}Config.cmake
     INSTALL_DESTINATION ${GR_CMAKE_DIR}
 )
-

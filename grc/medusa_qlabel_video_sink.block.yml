@@ -1,0 +1,39 @@
+id: medusa_qlabel_video_sink
+label: QLabel Video Sink
+category: '[Medusa]'
+
+templates:
+  imports: from gnuradio import medusa
+  var_make: self.${id} = None
+  make: |-
+      <%
+          win = '_label_video_sink_%s'%id
+      %>\
+      ${win} = medusa.VideoSinkWidget(${resolution.width}, ${resolution.height}, self)
+      self.${id} = medusa.qlabel_video_sink(${resolution.width}, ${resolution.height})
+      self.${id}.newFrame.connect(${win}.onNewFrame)
+
+      ${gui_hint() % win}
+
+parameters:
+- id: gui_hint
+  label: GUI Hint
+  dtype: gui_hint
+  hide: part
+
+- id: resolution
+  label: Resolution
+  dtype: enum
+  options: ["640x480", "1280x720", "1280x1024"]
+  option_attributes:
+    width: [640, 1280, 1280]
+    height: [480, 720, 1024]
+
+inputs:
+- label: frame
+  domain: stream
+  dtype: byte
+  vlen: ${ resolution.width * resolution.height * 3 }
+  optional: false
+
+file_format: 1

@@ -22,12 +22,8 @@ add_subdirectory(bindings)
 GR_PYTHON_INSTALL(
     FILES
     __init__.py
-    array_plot_3d.py
-    calc_steering_vec.py
-    array_propagation_sim.py
-    plot_array_3d_aruco.py
-    manual_beamsteering.py
-    weights_to_a_matrix.py DESTINATION ${GR_PYTHON_DIR}/gnuradio/medusa
+    qlabel_video_sink.py
+    DESTINATION ${GR_PYTHON_DIR}/gnuradio/medusa
 )
 
 ########################################################################
@@ -42,6 +38,5 @@ set(GR_TEST_TARGET_DEPS gnuradio-medusa)
 add_custom_target(
   copy_module_for_tests ALL
   COMMAND ${CMAKE_COMMAND} -E copy_directory ${CMAKE_CURRENT_SOURCE_DIR}
-          ${CMAKE_BINARY_DIR}/test_modules/gnuradio/medusa/
+          ${PROJECT_BINARY_DIR}/test_modules/gnuradio/medusa/
 )
-GR_ADD_TEST(qa_plot_array_3d_aruco ${PYTHON_EXECUTABLE} ${CMAKE_CURRENT_SOURCE_DIR}/qa_plot_array_3d_aruco.py)
