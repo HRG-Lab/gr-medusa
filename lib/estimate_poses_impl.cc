@@ -54,6 +54,8 @@ estimate_poses_impl::estimate_poses_impl(std::string calibration_file,
                      { sl / 2, sl / 2, 0 },
                      { sl / 2, -sl / 2, 0 },
                      { -sl / 2, -sl / 2, 0 } };
+
+    message_port_register_out(pmt::mp("positions"));
 }
 
 estimate_poses_impl::~estimate_poses_impl() {}
@@ -72,14 +74,19 @@ int estimate_poses_impl::work(int noutput_items,
         get_tags_in_window(tags, 0, 0, i);
         if (tags.size() > 0) {
             std::memcpy(frame.data, &in[i * block_size], block_size);
-            std::vector<int> ids =
-                boost::any_cast<std::vector<int>>(pmt::any_ref(tags[0].value));
-            std::vector<std::vector<Point2f>> corners =
-                boost::any_cast<std::vector<std::vector<Point2f>>>(
-                    pmt::any_ref(tags[1].value));
+            std::vector<uint32_t> ids =pmt::u32vector_elements(tags[0].value);
+            std::vector<std::vector<Point2f>> corners;
 
-            std::vector<Mat> rvecs(ids.size());
-            std::vector<Mat> tvecs(ids.size());
+            corners.resize(pmt::length(tags[1].value));
+            for (size_t j=0; j < pmt::length(tags[1].value); j++) {
+                corners[j].resize(4);
+                pmt::pmt_t four_corners = pmt::vector_ref(tags[1].value, j);
+                for (int k=0; k < 4; k++) {
+                    pmt::pmt_t point = pmt::vector_ref(four_corners, k);
+                    corners[j][k] = Point2f(pmt::to_float(pmt::car(point)), pmt::to_float(pmt::cdr(point)));
+                }
+            }
+            std::vector<Vec3d> rvecs(ids.size()), tvecs(ids.size());
 
             for (size_t k = 0; k < corners.size(); k++) {
                 solvePnP(d_marker_pts,
@@ -93,6 +100,20 @@ int estimate_poses_impl::work(int noutput_items,
                 drawFrameAxes(
                     frame, d_cam_mtx, d_dist_coeffs, rvecs.at(k), tvecs.at(k), 0.1);
             }
+
+            pmt::pmt_t dict = pmt::make_dict();
+            dict = pmt::dict_add(dict, pmt::mp("ids"), pmt::init_u32vector(ids.size(), ids));
+            pmt::pmt_t rvecs_pmt = pmt::make_vector(rvecs.size(), pmt::PMT_NIL);
+            pmt::pmt_t tvecs_pmt = pmt::make_vector(tvecs.size(), pmt::PMT_NIL);
+            for (size_t idx=0; idx < rvecs.size(); idx++) {
+                double tmp_r[3] = {rvecs[idx][0], rvecs[idx][1], rvecs[idx][2]};
+                double tmp_t[3] = {tvecs[idx][0], tvecs[idx][1], tvecs[idx][2]};
+                pmt::vector_set(rvecs_pmt, idx, pmt::init_f64vector(3, tmp_r));
+                pmt::vector_set(tvecs_pmt, idx, pmt::init_f64vector(3, tmp_t));
+            }
+            dict = pmt::dict_add(dict, pmt::mp("rvecs"), rvecs_pmt);
+            dict = pmt::dict_add(dict, pmt::mp("tvecs"), tvecs_pmt);
+            message_port_pub(pmt::mp("positions"), dict);
         }
         memcpy(&out[i * block_size], &frame.data[0], block_size);
     }

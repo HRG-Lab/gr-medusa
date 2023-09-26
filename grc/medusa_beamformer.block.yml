@@ -1,0 +1,69 @@
+id: medusa_beamformer
+label: Beamformer
+category: '[Medusa]'
+
+templates:
+  imports: from gnuradio import medusa
+  make: medusa.beamformer(${nstreams}, ${algorithm}, signal_power=${signal_power}, noise_power=${noise_power}, signal_angle=(${signal_theta}, ${signal_phi}), intf_angle=(${intf_theta}, ${intf_phi}))
+  callbacks:
+  - set_signal_angle((${signal_theta}, ${signal_phi}))
+  - set_intf_angle((${intf_theta}, ${intf_phi}))
+
+parameters:
+- id: algorithm
+  label: Algorithm
+  dtype: enum
+  options: [medusa.MMSE]
+  option_labels: [MMSE]
+
+- id: nstreams
+  label: Number of streams
+  dtype: int
+  default: 32
+
+- id: signal_theta
+  label: Signal Angle (Theta)
+  dtype: int
+  default: 0
+
+- id: signal_phi
+  label: Signal Angle (Phi)
+  dtype: int
+  default: 0
+
+- id: intf_theta
+  label: Interferer Angle (Theta)
+  dtype: int
+  default: 0
+
+- id: intf_phi
+  label: Interferer Angle (Phi)
+  dtype: int
+  default: 0
+
+
+- id: signal_power
+  label: Signal Power
+  dtype: float
+  default: 1
+
+- id: noise_power
+  label: Noise Power
+  dtype: float
+  default: 0.001
+
+inputs:
+- domain: stream
+  dtype: complex
+  vlen: ${nstreams}
+
+- label: steering vecs
+  domain: message
+  optional: false
+
+outputs:
+- label: weights
+  domain: message
+  optional: false
+
+file_format: 1

@@ -1,0 +1,48 @@
+id: medusa_polar_plot
+label: Polar Plot
+category: '[Medusa]'
+
+templates:
+  imports: from gnuradio import medusa
+  make: |-
+    <%
+        win = 'self._%s_win'%id
+    %>\
+    ${win} = medusa.PolarPlotWidget(${autoscale},${log_scale},${plot_depth})
+    self.${id} = medusa.polar_plot()
+    ${gui_hint() % win}
+    self.${id}.sigUpdateData.connect(${win}.updateGraph)
+    self.${id}.sigUpdateAngle.connect(${win}.setLineAngle)
+  callbacks:
+  - set_angle_degrees(${angle_degrees})
+
+
+parameters:
+-   id: autoscale
+    label: Autoscale
+    dtype: bool
+    default: False
+-   id: log_scale
+    label: Log Scale
+    dtype: bool
+    default: True
+-   id: plot_depth
+    label: Plot Depth
+    dtype: float
+    default: 70.0
+-   id: angle_degrees
+    label: Source Angle
+    dtype: float
+    default: 0.0
+-   id: gui_hint
+    label: GUI Hint
+    dtype: gui_hint
+    hide: part
+      
+inputs:
+-   domain: message
+    id: plot
+    optional: true
+
+
+file_format: 1

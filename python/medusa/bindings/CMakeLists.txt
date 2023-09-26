@@ -31,7 +31,9 @@ include(GrPybind)
 list(APPEND medusa_python_files
     opencv_source_python.cc
     aruco_detector_python.cc
-    estimate_poses_python.cc python_bindings.cc)
+    estimate_poses_python.cc
+    preamble_to_pdu_python.cc
+    opencv_aruco_corner_source_python.cc python_bindings.cc)
 
 GR_PYBIND_MAKE_OOT(medusa
    ../../..

@@ -1,0 +1,272 @@
+id: medusa_opencv_aruco_corner_source
+label: ArUco Corner Source
+category: '[Medusa]/OpenCV'
+
+templates:
+  imports: |-
+    from gnuradio import medusa
+    from cv2 import aruco
+  make: |-
+    medusa.opencv_aruco_corner_source(
+        ${video_source},
+        ${resolution.width},
+        ${resolution.height},
+        ${dictionary},
+        ${marker_side_length},
+        ${calibration_file},
+        ${draw_markers},
+        ${draw_poses},
+        ${adaptiveThreshConstant},
+        ${adaptiveThreshWinSizeMax},
+        ${adaptiveThreshWinSizeMin},
+        ${adaptiveThreshWinSizeStep},
+        ${cornerRefinementMaxIterations},
+        ${cornerRefinementMethod},
+        ${cornerRefinementMinAccuracy},
+        ${cornerRefinementWinSize},
+        ${detectInvertedMarker},
+        ${errorCorrectionRate},
+        ${markerBorderBits},
+        ${maxErroneousBitsInBorderRate},
+        ${maxMarkerPerimeterRate},
+        ${minCornerDistanceRate},
+        ${minDistanceToBorder},
+        ${minMarkerDistanceRate},
+        ${minMarkerLengthRatioOriginalImg},
+        ${minMarkerPerimeterRate},
+        ${minOtsuStdDev},
+        ${minSideLengthCanonicalImg},
+        ${perspectiveRemoveIgnoredMarginPerCell},
+        ${perspectiveRemovePixelPerCell},
+        ${polygonalApproxAccuracyRate},
+        ${useAruco3Detection}
+    )
+
+parameters:
+- id: video_source
+  label: Video Source
+  dtype: int
+  default: 0
+
+- id: resolution
+  label: Resolution
+  dtype: enum
+  options: ["640x480", "1280x720", "1280x1024", "1920x1080"]
+  option_attributes:
+    width: [640, 1280, 1280, 1920]
+    height: [480, 720, 1024, 1080]
+
+- id: dictionary
+  label: ArUco Dictionary
+  dtype: enum
+  options: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21]
+  option_labels: [DICT_4X4_50, DICT_4X4_100, DICT_4X4_250, DICT_4X4_1000, DICT_5X5_50, DICT_5X5_100, DICT_5X5_250, DICT_5X5_1000, DICT_6X6_50, DICT_6X6_100, DICT_6X6_250, DICT_6X6_1000, DICT_7X7_50, DICT_7X7_100, DICT_7X7_250, DICT_7X7_1000, DICT_ARUCO_ORIGINAL, DICT_APRILTAG_16h5, DICT_APRILTAG_25h9, DICT_APRILTAG_36h10, DICT_APRILTAG_36h11, DICT_ARUCO_MIP_36h12]
+
+- id: calibration_file
+  label: Calibration File
+  dtype: file_open
+
+- id: marker_side_length
+  label: Marker Side Length [m]
+  dtype: float
+
+- id: draw_markers
+  label: Draw Markers
+  dtype: enum
+  options: ['True', 'False']
+  option_labels: ['Yes', 'No']
+  default: 'False'
+
+- id: draw_poses
+  label: Draw Poses
+  dtype: enum
+  options: ['True', 'False']
+  option_labels: ['Yes', 'No']
+  default: 'False'
+
+- id: adaptiveThreshConstant
+  label: Adapive Theshold Constant
+  dtype: float
+  category: Config
+  default: 7.0
+  hide: part
+
+- id: adaptiveThreshWinSizeMax
+  label: Adapative Threshold Maximum Window Size
+  dtype: int
+  category: Config
+  default: 23
+  hide: part
+
+- id: adaptiveThreshWinSizeMin
+  label: Adapative Threshold Minimum Window Size
+  dtype: int
+  category: Config
+  default: 3
+  hide: part
+
+- id: adaptiveThreshWinSizeStep
+  label: Adapative Threshold Window Step Size
+  dtype: int
+  category: Config
+  default: 10
+  hide: part
+
+- id: cornerRefinementMaxIterations
+  label: Maximum Corner Refinement Iterations
+  dtype: int
+  category: Config
+  default: 30
+  hide: part
+
+- id: cornerRefinementMethod
+  label: Corner Refinement Method
+  dtype: enum
+  category: Config
+  options: [0, 1, 2]
+  option_labels: [None, Subpixel, Contour]
+  default: 0
+  hide: part
+
+- id: cornerRefinementMinAccuracy
+  label: Minimum Corner Refinement Accuracy
+  dtype: float
+  category: Config
+  default: 0.1
+  hide: part
+
+- id: cornerRefinementWinSize
+  label: Corner Refinement Window Size
+  dtype: int
+  category: Config
+  default: 5
+  hide: part
+
+- id: detectInvertedMarker
+  label: Detect Inverted Marker
+  dtype: enum
+  options: ['True', 'False']
+  option_labels: ['Yes', 'No']
+  category: Config
+  default: 'False'
+  hide: part
+
+- id: errorCorrectionRate
+  label: Error Correction Rate
+  dtype: float
+  category: Config
+  default: 0.6
+  hide: part
+
+- id: markerBorderBits
+  label: Number of Marker Border Bits
+  dtype: int
+  category: Config
+  default: 1
+  hide: part
+
+- id: maxErroneousBitsInBorderRate
+  label: Maximum Erroneous Border Bits Percentage
+  dtype: float
+  category: Config
+  default: 0.35
+  hide: part
+
+- id: maxMarkerPerimeterRate
+  label: Maximum Marker Perimeter Rate
+  dtype: float
+  category: Config
+  default: 4.0
+  hide: part
+
+- id: minCornerDistanceRate
+  label: Minimum Corner Distance
+  dtype: float
+  category: Config
+  default: 0.05
+  hide: part
+
+- id: minDistanceToBorder
+  label: Minimum Pixels to Image Border
+  dtype: int
+  category: Config
+  default: 3
+  hide: part
+
+- id: minMarkerDistanceRate
+  label:  Minimum Distance Between Markers
+  dtype: float
+  category: Config
+  default: 0.05
+  hide: part
+
+- id: minMarkerLengthRatioOriginalImg
+  label: Minimum Marker Length Ratio
+  dtype: float
+  category: Config
+  default: 0.0
+  hide: part
+
+- id: minMarkerPerimeterRate
+  label: Minimum Marker Perimeter Rate
+  dtype: float
+  category: Config
+  default: 0.03
+  hide: part
+
+- id: minOtsuStdDev
+  label: Minimum Otsu Thresholding Deviation
+  dtype: float
+  category: Config
+  default: 5.0
+  hide: part
+
+- id: minSideLengthCanonicalImg
+  label: Minimum Marker Side Length in Canonical Image
+  dtype: int
+  category: Config
+  default: 32
+  hide: part
+
+- id: perspectiveRemoveIgnoredMarginPerCell
+  label: Cell Pixel Margin
+  dtype: float
+  category: Config
+  default: 0.13
+  hide: part
+
+- id: perspectiveRemovePixelPerCell
+  label: Perspective Remove Pixel Per Cell
+  dtype: int
+  category: Config
+  default: 4
+  hide: part
+
+- id: polygonalApproxAccuracyRate
+  label: Polygonal Approximation Accuracy Rate
+  dtype: float
+  category: Config
+  default: 0.03
+  hide: part
+
+- id: useAruco3Detection
+  label: Enable Improved Aruco Detection Strategy
+  dtype: enum
+  options: ['True', 'False']
+  option_labels: ['Yes', 'No']
+  category: Config
+  default: 'True'
+  hide: part
+
+outputs:
+- label: frame_info
+  domain: message
+  optional: true
+
+- label: frame
+  domain: stream
+  dtype: byte
+  vlen: ${resolution.width * resolution.height * 3}
+  optional: true
+
+file_format: 1

@@ -1,0 +1,26 @@
+id: medusa_manual_beamsteering
+label: Manual Beamsteering
+category: '[Medusa]'
+
+templates:
+  imports: from gnuradio import medusa
+  make: medusa.manual_beamsteering(${num_elements},${sep_lambda},${angle_degrees})
+  callbacks:
+    - set_angle_degrees(${angle_degrees})
+
+parameters:
+- id: num_elements
+  label: Number of Elements
+  dtype: int
+- id: sep_lambda
+  label: Separation in lambda
+  dtype: float
+- id: angle_degrees
+  label: Angle (degrees)
+  dtype: float
+
+outputs:
+- label: weights
+  domain: message
+
+file_format: 1

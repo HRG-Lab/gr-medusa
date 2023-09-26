@@ -24,6 +24,8 @@ namespace py = pybind11;
     void bind_opencv_source(py::module& m);
     void bind_aruco_detector(py::module& m);
     void bind_estimate_poses(py::module& m);
+    void bind_preamble_to_pdu(py::module& m);
+    void bind_opencv_aruco_corner_source(py::module& m);
 // ) END BINDING_FUNCTION_PROTOTYPES
 
 
@@ -55,5 +57,7 @@ PYBIND11_MODULE(medusa_python, m)
     bind_opencv_source(m);
     bind_aruco_detector(m);
     bind_estimate_poses(m);
+    bind_preamble_to_pdu(m);
+    bind_opencv_aruco_corner_source(m);
     // ) END BINDING_FUNCTION_CALLS
 }

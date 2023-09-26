@@ -9,5 +9,18 @@ install(FILES
     medusa_qlabel_video_sink.block.yml
     medusa_opencv_source.block.yml
     medusa_aruco_detector.block.yml
-    medusa_estimate_poses.block.yml DESTINATION share/gnuradio/grc/blocks
+    medusa_estimate_poses.block.yml
+    medusa_preamble_to_pdu.block.yml
+    medusa_polar_plot.block.yml
+    medusa_array_sim.block.yml
+    medusa_manual_beamsteering.block.yml
+    medusa_ula_sim.block.yml
+    medusa_weights_to_matrix_a.block.yml
+    medusa_plot_3d_positions.block.yml
+    medusa_plot_3d_array_factor.block.yml
+    medusa_plot_array_factor_contour.block.yml
+    medusa_positions_to_steering_vecs.block.yml
+    medusa_beamformer.block.yml
+    medusa_opencv_aruco_calc_steering_vecs.block.yml
+    medusa_opencv_aruco_corner_source.block.yml DESTINATION share/gnuradio/grc/blocks
 )

@@ -15,6 +15,8 @@ list(APPEND medusa_sources
     opencv_source_impl.cc
     aruco_detector_impl.cc
     estimate_poses_impl.cc
+    preamble_to_pdu_impl.cc
+    opencv_aruco_corner_source_impl.cc
 )
 
 set(medusa_sources "${medusa_sources}" PARENT_SCOPE)

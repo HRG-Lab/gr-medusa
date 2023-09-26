@@ -1,0 +1,28 @@
+id: medusa_plot_3d_array_factor
+label: Plot 3D Array Factor
+category: '[Medusa]'
+
+templates:
+  imports: from gnuradio import medusa
+  var_make: self.${id} = None
+  make: |-
+    <%
+        win = '_3d_plot_%s'%id
+    %>\
+    ${win} = medusa.plot_3d_array_factor(self)
+    self.${id} = ${win}
+
+    ${gui_hint() % win}
+
+parameters:
+- id: gui_hint
+  label: GUI Hint
+  dtype: gui_hint
+  hide: part
+
+inputs:
+- label: plot
+  domain: message
+  optional: true
+
+file_format: 1

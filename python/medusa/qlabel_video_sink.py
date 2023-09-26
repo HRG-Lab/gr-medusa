@@ -37,7 +37,9 @@ class VideoSinkWidget(QLabel):
             QImage.Format_BGR888,
         )
         pixmap = QPixmap.fromImage(img)
-        self.setPixmap(pixmap)
+        self.setPixmap(
+            pixmap.scaled(self.size(), Qt.KeepAspectRatio, Qt.SmoothTransformation)
+        )
 
 
 class qlabel_video_sink(gr.sync_block, QObject):

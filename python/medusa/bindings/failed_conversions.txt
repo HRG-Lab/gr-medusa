@@ -2,3 +2,4 @@
 ./include/gnuradio/medusa/aruco_detector.hError occurred while running CASTXML xml file does not exist
 ./include/gnuradio/medusa/aruco_detector.hError occurred while running CASTXML xml file does not exist
 ./include/gnuradio/medusa/estimate_poses.hError occurred while running CASTXML xml file does not exist
+./include/gnuradio/medusa/opencv_aruco_corner_source.hError occurred while running CASTXML xml file does not exist

@@ -1,0 +1,106 @@
+id: medusa_plot_array_factor_contour
+label: Plot Array Factor (Contour)
+category: '[Medusa]'
+
+templates:
+  imports: |-
+    from gnuradio import medusa
+    import numpy as np
+  var_make: self.${id} = None
+  make: |-
+    <%
+        win = '_contour_plot_%s'%id
+    %>\
+    ${win} = medusa.ContourPlot(${title}, ${background}, ${cmap}, ${x_tick_spacing}, ${y_tick_spacing}, ${num_levels}, ${auto_scale}, ${draw_isos}, (${signal_angle_theta}, ${signal_angle_phi}), self)
+    ${win}.setData(np.linspace(-180, 180, 361), np.linspace(0, 180, 181), np.zeros((361, 181)))
+    self.${id} = medusa.plot_array_factor_contour()
+    self.${id}.newData.connect(${win}.setData)
+    self.${id}.newAngle.connect(${win}.setSignalAngle)
+    self.${id}.newIntfAngle.connect(${win}.setIntfAngles)
+    ${gui_hint() % win}
+  callbacks:
+  - set_signal_angle(${signal_angle_theta}, ${signal_angle_phi})
+  - set_intf_angle(${intf_angle_theta}, ${intf_angle_phi})
+
+
+parameters:
+- id: title
+  label: Title
+  dtype: string
+
+- id: background
+  label: Background Color
+  dtype: string
+  default: "default"
+
+- id: cmap
+  label: Colormap
+  dtype: string
+  options: ['viridis', 'cividis', 'inferno']
+  default: 'viridis'
+
+- id: x_tick_spacing
+  label: X Tick Spacing
+  dtype: int
+  default: 15
+  hide: part
+
+- id: y_tick_spacing
+  label: Y Tick Spacing
+  dtype: int
+  default: 30
+  hide: part
+
+- id: num_levels
+  label: Number of Contour Levels
+  dtype: int
+  default: 10
+  hide: part
+
+- id: auto_scale
+  label: Auto Scale
+  dtype: enum
+  default: 'False'
+  options: ['True', 'False']
+  option_labels: ['Yes', 'No']
+  hide: part
+
+- id: draw_isos
+  label: Draw Isolines
+  dtype: enum
+  default: 'False'
+  options: ['True', 'False']
+  option_labels: ['Yes', 'No']
+  hide: part
+
+- id: signal_angle_theta
+  label: Signal Angle (theta)
+  dtype: int
+  default: 0
+
+- id: signal_angle_phi
+  label: Signal Angle (phi)
+  dtype: int
+  default: 0
+
+- id: intf_angle_theta
+  label: Interferer Angle (theta)
+  dtype: int
+  default: 0
+
+- id: intf_angle_phi
+  label: Interferer Angle (phi)
+  dtype: int
+  default: 0
+
+- id: gui_hint
+  label: GUI Hint
+  dtype: gui_hint
+  hide: part
+
+inputs:
+- label: plot
+  domain: message
+  optional: true
+
+file_format: 1

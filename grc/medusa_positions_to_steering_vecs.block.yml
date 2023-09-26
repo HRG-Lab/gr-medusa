@@ -1,0 +1,44 @@
+id: medusa_positions_to_steering_vecs
+label: Positions to Steering Vectors
+category: '[Medusa]'
+
+templates:
+  imports: from gnuradio import medusa
+  make: medusa.positions_to_steering_vecs(${marker_length}, ${origin_id}, ${element_ids}, ${update_rate})
+
+parameters:
+- id: marker_length
+  label: Marker Length
+  dtype: float
+  default: 0.1
+
+- id: origin_id
+  label: Origin Marker ID
+  dtype: int
+  default: 0
+
+- id: element_ids
+  label: Element IDs
+  dtype: int_vector
+  default: [1]
+
+- id: update_rate
+  label: Update Rate [s]
+  dtype: float
+  default: 0.5
+
+inputs:
+- label: frame_info
+  domain: message
+  optional: false
+
+outputs:
+- label: steering vecs
+  domain: message
+  optional: False
+
+- label: positions
+  domain: message
+  optional: True
+
+file_format: 1

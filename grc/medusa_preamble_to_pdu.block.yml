@@ -1,0 +1,31 @@
+id: medusa_preamble_to_pdu
+label: Correlated Stream to PDU
+category: '[Medusa]'
+
+templates:
+  imports: from gnuradio import medusa
+  make: medusa.preamble_to_pdu(${num_elements}, ${data_length}, ${corr_tag})
+
+parameters:
+- id: num_elements
+  label: Number of Elements
+  dtype: int
+- id: data_length
+  label: Data Length
+  dtype: int
+- id: corr_tag
+  label: Correlation Tag
+  dtype: string
+
+inputs:
+- label: in
+  domain: stream
+  dtype: complex
+  vlen: ${num_elements}
+
+outputs:
+- label: pdus
+  domain: message
+  optional: True
+  
+file_format: 1

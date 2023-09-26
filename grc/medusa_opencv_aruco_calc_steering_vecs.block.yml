@@ -1,0 +1,92 @@
+id: medusa_opencv_aruco_calc_steering_vecs
+label: OpenCV ArUco Markers to Steering Vectors
+category: '[Medusa]'
+
+templates:
+  imports: from gnuradio import medusa
+  make: |-
+    medusa.opencv_aruco_calc_steering_vecs(
+        ${video_source},
+        ${calibration_file},
+        ${dictionary},
+        ${element_ids},
+        ${origin_id},
+        ${marker_side_length},
+        (${resolution.width}, ${resolution.height}),
+        ${draw_markers},
+        ${draw_poses}
+    )
+
+parameters:
+- id: video_source
+  label: Video Source
+  dtype: int
+  default: 0
+
+- id: calibration_file
+  label: Calibration File
+  dtype: file_open
+
+- id: dictionary
+  label: ArUco Dictionary
+  dtype: enum
+  options: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21]
+  option_labels: [DICT_4X4_50, DICT_4X4_100, DICT_4X4_250, DICT_4X4_1000, DICT_5X5_50, DICT_5X5_100, DICT_5X5_250, DICT_5X5_1000, DICT_6X6_50, DICT_6X6_100, DICT_6X6_250, DICT_6X6_1000, DICT_7X7_50, DICT_7X7_100, DICT_7X7_250, DICT_7X7_1000, DICT_ARUCO_ORIGINAL, DICT_APRILTAG_16h5, DICT_APRILTAG_25h9, DICT_APRILTAG_36h10, DICT_APRILTAG_36h11, DICT_ARUCO_MIP_36h12]
+
+- id: element_ids
+  label: Element IDs
+  dtype: int_vector
+  default: [1]
+  hide: part
+
+- id: origin_id
+  label: Origin ID
+  dtype: int
+  default: 0
+
+- id: marker_side_length
+  label: Marker Side Length [m]
+  dtype: float
+
+- id: resolution
+  label: Resolution
+  dtype: enum
+  options: ["640x480", "1280x720", "1280x1024", "1920x1080"]
+  option_attributes:
+    width: [640, 1280, 1280, 1920]
+    height: [480, 720, 1024, 1080]
+
+- id: draw_markers
+  label: Draw Markers
+  dtype: enum
+  default: 'True'
+  options: ['True', 'False']
+  option_labels: ['Yes', 'No']
+  hide: part
+
+- id: draw_poses
+  label: Draw Poses
+  dtype: enum
+  default: 'True'
+  options: ['True', 'False']
+  option_labels: ['Yes', 'No']
+  hide: part
+
+outputs:
+- label: frame
+  domain: message
+  optional: true
+
+- label: positions
+  domain: message
+  optional: true
+
+- label: frame_info
+  domain: message
+  optional: true
+
+- label: steering_vecs
+  domain: message
+  optional: true
+
+file_format: 1

@@ -13,6 +13,7 @@
 #include <opencv2/objdetect/aruco_detector.hpp>
 #include <opencv2/objdetect/aruco_dictionary.hpp>
 #include <pmt/pmt.h>
+#include <cstddef>
 #include <cstdint>
 #include <cstring>
 #include <stdexcept>
@@ -39,6 +40,7 @@ aruco_detector_impl::aruco_detector_impl(int dictionary, int width, int height)
     d_dictionary(aruco::getPredefinedDictionary(dictionary)),
     d_params(aruco::DetectorParameters())
 {
+    d_params.useAruco3Detection = true;
     d_detector = aruco::ArucoDetector(d_dictionary, d_params);
 }
 
@@ -60,10 +62,20 @@ int aruco_detector_impl::work(int noutput_items,
         std::vector<std::vector<cv::Point2f>> corners, rejected;
         d_detector.detectMarkers(frame, corners, ids, rejected);
 
-        if (ids.size() > 0) {
-            pmt::pmt_t ids_pmt = pmt::make_any(ids);
-            pmt::pmt_t corners_pmt = pmt::make_any(corners);
+        std::vector<uint32_t> ids_to_send(ids.begin(), ids.end());
+        pmt::pmt_t corners_pmt = pmt::make_vector(corners.size(), pmt::PMT_NIL);
 
+        if (ids.size() > 0) {
+            pmt::pmt_t ids_pmt = pmt::init_u32vector(ids.size(), ids_to_send);
+            for (size_t j=0; j < ids.size(); j++) {
+                auto marker = corners.at(j);
+                auto marker_pmt = pmt::make_vector(4, pmt::PMT_NIL);
+                for (int k=0; k < 4; k++) {
+                    auto corner = marker.at(k);
+                    pmt::vector_set(marker_pmt, k, pmt::cons(pmt::mp(corner.x), pmt::mp(corner.y)));
+                }
+                pmt::vector_set(corners_pmt, j, marker_pmt);
+            }
             add_item_tag(0, nitems_written(0), pmt::intern("ids"), ids_pmt);
             add_item_tag(0, nitems_written(0), pmt::intern("corners"), corners_pmt);
 

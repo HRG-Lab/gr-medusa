@@ -13,5 +13,7 @@ install(FILES
     api.h
     opencv_source.h
     aruco_detector.h
-    estimate_poses.h DESTINATION include/gnuradio/medusa
+    estimate_poses.h
+    preamble_to_pdu.h
+    opencv_aruco_corner_source.h DESTINATION include/gnuradio/medusa
 )

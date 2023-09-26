@@ -24,10 +24,10 @@ parameters:
 - id: resolution
   label: Resolution
   dtype: enum
-  options: ["640x480", "1280x720", "1280x1024"]
+  options: ["640x480", "1280x720", "1280x1024", "1920x1080"]
   option_attributes:
-    width: [640, 1280, 1280]
-    height: [480, 720, 1024]
+    width: [640, 1280, 1280, 1920]
+    height: [480, 720, 1024, 1080]
 
 inputs:
 - label: frame

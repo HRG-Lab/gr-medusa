@@ -1,0 +1,94 @@
+options:
+  parameters:
+    author: gaylybailey
+    catch_exceptions: 'True'
+    category: '[GRC Hier Blocks]'
+    cmake_opt: ''
+    comment: ''
+    copyright: ''
+    description: ''
+    gen_cmake: 'On'
+    gen_linking: dynamic
+    generate_options: qt_gui
+    hier_block_src_path: '.:'
+    id: default
+    max_nouts: '0'
+    output_language: python
+    placement: (0,0)
+    qt_qss_theme: ''
+    realtime_scheduling: ''
+    run: 'True'
+    run_command: '{python} -u {filename}'
+    run_options: prompt
+    sizing_mode: fixed
+    thread_safe_setters: ''
+    title: Not titled yet
+    window_size: (1000,1000)
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [8, 8]
+    rotation: 0
+    state: enabled
+
+blocks:
+- name: samp_rate
+  id: variable
+  parameters:
+    comment: ''
+    value: '32000'
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [184, 12]
+    rotation: 0
+    state: enabled
+- name: blocks_message_debug_0
+  id: blocks_message_debug
+  parameters:
+    affinity: ''
+    alias: ''
+    comment: ''
+    en_uvec: 'True'
+    log_level: info
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [664, 280.0]
+    rotation: 0
+    state: true
+- name: medusa_opencv_aruco_calc_steering_vecs_0
+  id: medusa_opencv_aruco_calc_steering_vecs
+  parameters:
+    affinity: ''
+    alias: ''
+    calibration_file: /home/gaylybailey/Documents/Programming/OpenCVSandbox/logitech_brio.yaml
+    comment: ''
+    dictionary: '0'
+    draw_markers: 'True'
+    draw_poses: 'True'
+    element_ids: '[1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18,
+      19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32]'
+    marker_side_length: '0.05'
+    maxoutbuf: '0'
+    minoutbuf: '0'
+    origin_id: '36'
+    resolution: 1920x1080
+    video_source: '2'
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [160, 280.0]
+    rotation: 0
+    state: true
+
+connections:
+- [medusa_opencv_aruco_calc_steering_vecs_0, frame, blocks_message_debug_0, log]
+
+metadata:
+  file_format: 1
+  grc_version: 3.10.7.0

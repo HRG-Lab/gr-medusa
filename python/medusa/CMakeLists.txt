@@ -23,8 +23,30 @@ GR_PYTHON_INSTALL(
     FILES
     __init__.py
     qlabel_video_sink.py
-    DESTINATION ${GR_PYTHON_DIR}/gnuradio/medusa
+    polar_plot.py
+    array_sim.py
+    manual_beamsteering.py
+    ula_sim.py
+    weights_to_matrix_a.py
+    plot_3d_positions.py
+    plot_3d_array_factor.py
+    plot_array_factor_contour.py
+    positions_to_steering_vecs.py
+    beamformer.py
+    opencv_aruco_calc_steering_vecs.py DESTINATION ${GR_PYTHON_DIR}/gnuradio/medusa
 )
+
+GR_PYTHON_INSTALL(
+    FILES 
+    aruco/__init__.py
+    aruco/marker.py DESTINATION ${GR_PYTHON_DIR}/gnuradio/medusa/aruco)
+
+GR_PYTHON_INSTALL(
+    FILES 
+    aruco/geometry/__init__.py
+    aruco/geometry/axes.py
+    aruco/geometry/point.py
+    aruco/geometry/transform.py DESTINATION ${GR_PYTHON_DIR}/gnuradio/medusa/aruco/geometry)
 
 ########################################################################
 # Handle the unit tests
@@ -40,3 +62,4 @@ add_custom_target(
   COMMAND ${CMAKE_COMMAND} -E copy_directory ${CMAKE_CURRENT_SOURCE_DIR}
           ${PROJECT_BINARY_DIR}/test_modules/gnuradio/medusa/
 )
+GR_ADD_TEST(qa_opencv_aruco_calc_steering_vecs ${PYTHON_EXECUTABLE} ${CMAKE_CURRENT_SOURCE_DIR}/qa_opencv_aruco_calc_steering_vecs.py)

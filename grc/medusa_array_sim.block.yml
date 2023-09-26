@@ -1,0 +1,54 @@
+id: medusa_array_sim
+label: Array Sim
+category: '[Medusa]'
+
+templates:
+  imports: from gnuradio import medusa
+  make: medusa.array_sim((${signal_angle_theta}, ${signal_angle_phi}), ${wavelen}, ${num_elems})
+  callbacks:
+  - set_signal_angle(${signal_angle_theta}, ${signal_angle_phi})
+
+parameters:
+- id: signal_angle_theta
+  label: Signal Angle (theta)
+  dtype: int
+  default: 0
+
+- id: signal_angle_phi
+  label: Signal Angle (phi)
+  dtype: int
+  default: 0
+
+- id: wavelen
+  label: Wavelength
+  dtype: float
+  default: 1.0
+
+- id: num_elems
+  label: Nmber of Elements
+  dtype: int
+  default: 32
+
+inputs:
+- domain: stream
+  dtype: complex
+  optional: false
+
+- label: steering vecs
+  domain: message
+  optional: true
+
+- label: weights
+  domain: message
+  optional: true
+
+outputs:
+- domain: stream
+  dtype: complex
+  optional: false
+
+- label: plot
+  domain: message
+  optional: true
+
+file_format: 1
